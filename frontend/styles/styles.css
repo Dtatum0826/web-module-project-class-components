@@ -44,6 +44,7 @@ h2 {
 h3 {
   font-size: 0.75rem;
   line-height: 2rem;
+  color: blue
 }
 
 nav {
@@ -82,4 +83,8 @@ ul, form {
 
 .todo:hover {
   cursor: pointer;
+}
+
+li{
+  color:blue;
 }
