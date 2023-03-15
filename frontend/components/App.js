@@ -1,7 +1,8 @@
 import React from 'react'
- import TodoList from './TodoList'
- import Todo from './Todo';
- import Form from './Form'
+import TodoList from './TodoList'
+import Todo from './Todo';
+import Form from './Form'
+
 
 
 
@@ -12,18 +13,18 @@ export default class App extends React.Component {
     this.state = {
       todos: [
         {
-          name: 'Organize Garage',
+          task: 'Organize Garage',
           id: 1528817077286, // could look different, you could use a timestamp to generate it
           completed: false
         },
         {
-          name: 'Bake Cookies',
+          task: 'Bake Cookies',
           id: 1528817084358,
           completed: true
         },
         {
-          name: 'Meal prep',
-          id: 1528817084358,
+          task: 'Meal prep',
+          id: 1528817084357,
           completed: true
         }
 
@@ -32,17 +33,54 @@ export default class App extends React.Component {
 
   }
   handleClear = () => {
-    console.log("clear clicked")
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.filter(todo => {
+        return (todo.completed === false);
+      })
+    })
+
+
   }
+  handleAdd = (task) => {
+    const newTodo = {
+      task: task,
+      id: Date.now(),
+      completed: false
+    }
+    this.setState({
+      ...this.state,
+      todos: [...this.state.todos, newTodo]
+    })
+  }
+
+  handleToggle = (clickedId) => {
+    
+
+      this.setState({
+        ...this.state,
+        todos: this.state.todos.map(todo => {
+          if (todo.id === clickedId) {
+            return {
+              ...todo,
+              completed: !todo.completed
+            }
+          } else  
+          return todo
+        })
+      })
+  }
+
+
   render() {
     const { todos } = this.state
-    console.log(todos)
+
     return (
       <div>
         <h1>TODOS</h1>
-        <TodoList todos={todos} />
-        <Form/>
-        <button onClick ={this.handleClear}>Clear</button>
+        <TodoList handleToggle={this.handleToggle} todos={todos} />
+        <Form handleAdd={this.handleAdd} />
+        <button onClick={this.handleClear}>Clear</button>
       </div>
     )
   }
